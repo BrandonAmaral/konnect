@@ -1,18 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-
 import { CustomError } from '@common/errors/CustomError';
 
 export const errorHandler = (
   err: Error,
-  req: Request,
-  res: Response,
+  request: Request,
+  response: Response,
   next: NextFunction,
 ) => {
   if (err instanceof CustomError) {
-    return res.status(err.statusCode).send({ errors: err.serializeErrors() });
+    return response.status(err.statusCode).send({ error: err.message });
   }
 
-  res.status(400).send({
-    errors: [{ message: 'Something went wrong' }],
-  });
+  response.status(500).send({ error: 'Internal server error' });
 };
