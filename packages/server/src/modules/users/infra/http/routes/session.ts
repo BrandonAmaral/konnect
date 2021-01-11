@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import * as Yup from 'yup';
 
-import User from '@modules/users/infra/mongoose/schemas/User';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 
@@ -29,7 +28,6 @@ sessionRouter.post('/create', async (request, response) => {
     username,
     tag,
     password,
-    isAdmin: false,
   });
 
   return response.status(201).send(user);
@@ -56,13 +54,6 @@ sessionRouter.post('/auth', async (request, response) => {
   });
 
   return response.status(200).send(user);
-});
-
-// List All Users
-sessionRouter.get('/list-all', async (request, response) => {
-  const users = await User.find({});
-
-  return response.status(200).send(users);
 });
 
 export default sessionRouter;

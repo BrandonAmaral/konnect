@@ -10,7 +10,6 @@ interface Request {
   username: string;
   tag: string;
   password: string;
-  isAdmin: boolean;
 }
 
 interface Response {
@@ -24,7 +23,6 @@ class CreateUserService {
     username,
     tag,
     password,
-    isAdmin,
   }: Request): Promise<Response> {
     const checkEmail = await User.findOne({
       email,
@@ -49,7 +47,7 @@ class CreateUserService {
       username,
       tag,
       password: hashedPassword,
-      isAdmin,
+      isAdmin: false,
     });
 
     const token = sign({ id: user.id }, authConfig.jwt.secret, {

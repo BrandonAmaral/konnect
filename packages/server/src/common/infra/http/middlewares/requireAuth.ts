@@ -5,6 +5,12 @@ import { NotAuthorizedError } from '@common/errors/NotAuthorizedError';
 import { TokenExpiredError } from '@common/errors/TokenExpiredError';
 import authConfig from '@config/auth';
 
+interface TokenPayload {
+  iat: number;
+  exp: number;
+  id: string;
+}
+
 export default function requireAuth(
   request: Request,
   response: Response,
@@ -19,7 +25,13 @@ export default function requireAuth(
   const [, token] = authHeader.split(' ');
 
   try {
-    verify(token, authConfig.jwt.secret);
+    const decoded = verify(token, authConfig.jwt.secret);
+
+    const { id } = decoded as TokenPayload;
+
+    request.user = {
+      id: id,
+    };
 
     return next();
   } catch {

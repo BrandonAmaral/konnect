@@ -1,14 +1,19 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
+import 'dotenv/config';
 
 let mongo: any;
 beforeAll(async () => {
+  process.env.JWT_KEY = 'd41d8cd98f00b204e9800998ecf8427e';
+
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();
 
   await mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
   });
 });
 

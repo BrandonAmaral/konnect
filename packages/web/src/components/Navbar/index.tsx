@@ -22,6 +22,7 @@ const Navbar: React.FC = () => {
           </div>
         ) : (
           <div>
+            <NavLink to="/profile">Profile</NavLink>
             <NavLink to="/" onClick={handleLogout}>
               Logout
             </NavLink>
