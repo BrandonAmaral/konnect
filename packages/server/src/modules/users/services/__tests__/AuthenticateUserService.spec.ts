@@ -2,7 +2,7 @@ import CreateUserService from '../CreateUserService';
 import AuthenticateUserService from '../AuthenticateUserService';
 import { BadRequestError } from '@common/errors/BadRequestError';
 
-describe('AuthenticateUser', () => {
+describe('AuthenticateUserService', () => {
   it('should be able to authenticate', async () => {
     const createService = new CreateUserService();
     const authenticateService = new AuthenticateUserService();

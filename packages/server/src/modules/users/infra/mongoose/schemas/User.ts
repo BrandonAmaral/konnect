@@ -5,6 +5,9 @@ export type UserAttributes = {
   username: string;
   tag: string;
   password: string;
+  profilePicture: string;
+  followers: string[];
+  following: string[];
   isAdmin: boolean;
 };
 
@@ -18,6 +21,7 @@ const UserSchema = new Schema(
       type: String,
       lowercase: true,
       required: true,
+      unique: true,
     },
     username: {
       type: String,
@@ -26,11 +30,30 @@ const UserSchema = new Schema(
     tag: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
     },
+    profilePicture: {
+      type: String,
+      required: true,
+    },
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+      },
+    ],
+    following: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+      },
+    ],
     isAdmin: {
       type: Boolean,
       required: true,

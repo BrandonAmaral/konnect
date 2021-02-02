@@ -47,6 +47,9 @@ class CreateUserService {
       username,
       tag,
       password: hashedPassword,
+      profilePicture: 'default.png',
+      followers: [],
+      following: [],
       isAdmin: false,
     });
 

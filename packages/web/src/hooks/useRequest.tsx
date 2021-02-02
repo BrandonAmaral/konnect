@@ -1,5 +1,7 @@
-import axios, { Method } from 'axios';
+import { Method } from 'axios';
 import { useState } from 'react';
+
+import api from '../api/index';
 
 interface Request {
   url: string;
@@ -12,7 +14,7 @@ const useRequest = ({ url, method }: Request) => {
   const makeRequest = async (data = {}) => {
     try {
       setErrors(null);
-      const response = await axios({ method: method, url: url, data: data });
+      const response = await api({ method: method, url: url, data: data });
 
       return response.data;
     } catch (err) {

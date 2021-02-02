@@ -1,7 +1,7 @@
 import CreateUserService from '../CreateUserService';
 import { BadRequestError } from '@common/errors/BadRequestError';
 
-describe('CreateUser', () => {
+describe('CreateUserService', () => {
   it('should be able to create a user', async () => {
     const service = new CreateUserService();
 

@@ -3,10 +3,10 @@ import { Router } from 'express';
 import requireAuth from '@common/infra/http/middlewares/requireAuth';
 import CreatePostService from '@modules/posts/services/CreatePostService';
 
-const sessionRouter = Router();
+const createRouter = Router();
 
 // Create Post
-sessionRouter.post('/create', requireAuth, async (request, response) => {
+createRouter.post('/create', requireAuth, async (request, response) => {
   const { content } = request.body;
 
   const createPost = new CreatePostService();
@@ -19,4 +19,4 @@ sessionRouter.post('/create', requireAuth, async (request, response) => {
   return response.status(201).send(post);
 });
 
-export default sessionRouter;
+export default createRouter;

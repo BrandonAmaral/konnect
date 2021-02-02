@@ -1,12 +1,16 @@
+import mongoose from 'mongoose';
+
 import CreatePostService from '../CreatePostService';
 
-describe('CreatePost', () => {
+describe('CreatePostService', () => {
   it('should be able to create a post', async () => {
     const service = new CreatePostService();
 
+    const userId = mongoose.Types.ObjectId();
+
     const expected = await service.execute({
       content: 'test',
-      owner: '5ffb3c015abf9957f89509e8',
+      owner: `${userId}`,
     });
 
     expect(expected).toHaveProperty('owner');
