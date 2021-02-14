@@ -13,7 +13,7 @@ unfollowRouter.put('/unfollow/:id', requireAuth, async (request, response) => {
     target_user_id: request.params.id,
   });
 
-  return response.status(200).send(unfollow);
+  return response.status(200).send({ unfollow });
 });
 
 export default unfollowRouter;

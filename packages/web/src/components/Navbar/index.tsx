@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Container, Content } from './styles';
+import { Container, Content, Menu } from './styles';
 import { useAuth } from '../../hooks/useAuth';
 
 const Navbar: React.FC = () => {
@@ -14,19 +14,27 @@ const Navbar: React.FC = () => {
   return (
     <Container>
       <Content>
-        <NavLink to="/">Home</NavLink>
+        <NavLink className="link" to="/home">
+          Home
+        </NavLink>
         {!user ? (
-          <div>
-            <NavLink to="/signin">Login</NavLink>
-            <NavLink to="/signup">Register</NavLink>
-          </div>
+          <Menu>
+            <NavLink className="link" to="/signin">
+              Login
+            </NavLink>
+            <NavLink className="link" to="/signup">
+              Register
+            </NavLink>
+          </Menu>
         ) : (
-          <div>
-            <NavLink to="/profile">Profile</NavLink>
-            <NavLink to="/" onClick={handleLogout}>
+          <Menu>
+            <NavLink className="link" to="/profile">
+              Profile
+            </NavLink>
+            <NavLink className="link" to="/home" onClick={handleLogout}>
               Logout
             </NavLink>
-          </div>
+          </Menu>
         )}
       </Content>
     </Container>

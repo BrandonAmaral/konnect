@@ -67,7 +67,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         setData({ token, user });
 
-        history.push('/');
+        history.push('/home');
       } catch (err) {
         setError(err.response.data.error);
       }
@@ -90,7 +90,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         setData({ token, user });
 
-        history.push('/');
+        history.push('/home');
       } catch (err) {
         setError(err.response.data.error);
       }

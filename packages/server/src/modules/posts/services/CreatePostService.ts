@@ -16,6 +16,7 @@ class CreatePostService {
       owner,
       content,
       content_slug: contentHash,
+      likes: [],
     });
 
     return post;

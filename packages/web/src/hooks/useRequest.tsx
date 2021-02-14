@@ -14,11 +14,16 @@ const useRequest = ({ url, method }: Request) => {
   const makeRequest = async (data = {}) => {
     try {
       setErrors(null);
-      const response = await api({ method: method, url: url, data: data });
+      const response = await api({
+        method,
+        url,
+        data,
+      });
 
       return response.data;
     } catch (err) {
       setErrors(err.response.data.error);
+      return {};
     }
   };
 

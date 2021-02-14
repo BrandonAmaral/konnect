@@ -13,7 +13,7 @@ followRouter.put('/follow/:id', requireAuth, async (request, response) => {
     target_user_id: request.params.id,
   });
 
-  return response.status(200).send(follow);
+  return response.status(200).send({ follow });
 });
 
 export default followRouter;

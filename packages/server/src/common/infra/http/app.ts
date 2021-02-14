@@ -3,6 +3,7 @@ import 'express-async-errors';
 import cors from 'cors';
 
 import routes from '@common/infra/http/api/v1';
+import uploadConfig from '@config/upload';
 import { NotFoundError } from '@common/errors/NotFoundError';
 import { errorHandler } from '@common/infra/http/middlewares/errorHandler';
 
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 
 app.all('*', async (request, response) => {

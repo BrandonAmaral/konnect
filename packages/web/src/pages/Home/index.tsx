@@ -1,21 +1,17 @@
 import React from 'react';
 
 import { Container, Content } from './styles';
-import { useAuth } from '../../hooks/useAuth';
-import Navbar from '../../components/Navbar/index';
+import Navbar from '../../components/Navbar';
+import Post from '../../components/Post';
+import Timeline from '../../components/Timeline';
 
 const Home: React.FC = () => {
-  const { user } = useAuth();
-
   return (
     <Container>
+      <Navbar />
       <Content>
-        <Navbar />
-        {user ? (
-          <div>{`Welcome ${user.username}!`}</div>
-        ) : (
-          <div>Welcome Guest!</div>
-        )}
+        <Post />
+        <Timeline />
       </Content>
     </Container>
   );

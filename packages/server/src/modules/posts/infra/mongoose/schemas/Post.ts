@@ -4,6 +4,7 @@ export type PostAttributes = {
   owner: mongoose.Schema.Types.ObjectId;
   content: string;
   content_slug: string;
+  likes: string[];
 };
 
 export type PostDocument = Document & PostAttributes;
@@ -25,6 +26,13 @@ const PostSchema = new Schema(
       type: String,
       required: true,
     },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,
