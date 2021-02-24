@@ -5,8 +5,8 @@ import User from '@modules/users/infra/mongoose/schemas/User';
 const userInfoRouter = Router();
 
 // Get User Info
-userInfoRouter.get('/info/:id', async (request, response) => {
-  const user = await User.findById(request.params.id).populate([
+userInfoRouter.get('/info/:tag', async (request, response) => {
+  const user = await User.findOne({ tag: request.params.tag }).populate([
     'following',
     'followers',
   ]);

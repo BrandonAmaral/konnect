@@ -15,7 +15,7 @@ class CreatePostService {
     const post = await Post.create({
       owner,
       content,
-      content_slug: contentHash,
+      slug: contentHash,
       likes: [],
     });
 

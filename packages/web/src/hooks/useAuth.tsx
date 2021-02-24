@@ -5,7 +5,7 @@ import api from '../api/index';
 
 interface AuthState {
   token: string;
-  user: Record<string, unknown>;
+  user: { _id: string; tag: string };
 }
 
 interface LoginCredentials {
@@ -21,7 +21,7 @@ interface RegisterCredentials {
 }
 
 interface AuthContextData {
-  user: Record<string, unknown>;
+  user: { _id: string; tag: string };
   register(credentials: RegisterCredentials): Promise<void>;
   login(credentials: LoginCredentials): Promise<void>;
   logout(): void;

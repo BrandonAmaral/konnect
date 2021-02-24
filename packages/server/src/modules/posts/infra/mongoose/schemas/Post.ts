@@ -3,7 +3,7 @@ import mongoose, { Document, Schema, Model } from 'mongoose';
 export type PostAttributes = {
   owner: mongoose.Schema.Types.ObjectId;
   content: string;
-  content_slug: string;
+  slug: string;
   likes: string[];
 };
 
@@ -22,7 +22,7 @@ const PostSchema = new Schema(
       type: String,
       required: true,
     },
-    content_slug: {
+    slug: {
       type: String,
       required: true,
     },

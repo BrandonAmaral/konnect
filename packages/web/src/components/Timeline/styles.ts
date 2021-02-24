@@ -18,29 +18,12 @@ export const Post = styled.div`
   margin-left: 5px;
   margin-right: 5px;
 
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+
   &:first-child {
     margin-top: 0px;
-  }
-
-  .user {
-    font-size: 14px;
-
-    ul {
-      list-style: none;
-    }
-
-    strong {
-      font-size: 20px;
-    }
-  }
-
-  .post {
-    margin-top: 10px;
-    font-size: 16px;
-
-    ul {
-      list-style: none;
-      word-wrap: break-word;
-    }
   }
 `;

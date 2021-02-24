@@ -18,6 +18,11 @@ const useRequest = ({ url, method }: Request) => {
         method,
         url,
         data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            '@nightcrawler:token',
+          )}`,
+        },
       });
 
       return response.data;

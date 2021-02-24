@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams, Redirect } from 'react-router-dom';
 
 import { Container, Content, Info } from './styles';
 import { useAuth } from '../../hooks/useAuth';
@@ -14,24 +15,33 @@ interface UserData {
   followers?: [];
 }
 
-const Profile: React.FC = () => {
+interface UserParam {
+  user: string;
+}
+
+const User: React.FC = () => {
   const { user } = useAuth();
+  const { user: param } = useParams<UserParam>();
+  const isMounted = useRef(true);
 
   const [info, setInfo] = useState<UserData>({});
 
   const { makeRequest } = useRequest({
     method: 'get',
-    url: `/api/users/info/${user.tag}`,
+    url: `/api/users/info/${param}`,
   });
 
   useEffect(() => {
-    const getInfo = async () => {
-      const data = await makeRequest();
-      setInfo(data);
-    };
-
-    getInfo();
+    if (!(param === user.tag)) {
+      makeRequest().then((response) => {
+        setInfo(response);
+      });
+    }
   }, []);
+
+  if (param === user.tag) {
+    return <Redirect to="/profile" />;
+  }
 
   const followingCount = info.following?.length;
   const followersCount = info.followers?.length;
@@ -53,4 +63,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default User;

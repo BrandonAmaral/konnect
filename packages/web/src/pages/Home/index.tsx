@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container, Content } from './styles';
 import Navbar from '../../components/Navbar';
-import Post from '../../components/Post';
+import CreatePost from '../../components/CreatePost';
 import Timeline from '../../components/Timeline';
 
 const Home: React.FC = () => {
@@ -10,7 +10,7 @@ const Home: React.FC = () => {
     <Container>
       <Navbar />
       <Content>
-        <Post />
+        <CreatePost />
         <Timeline />
       </Content>
     </Container>

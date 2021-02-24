@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
             <NavLink className="link" to="/profile">
               Profile
             </NavLink>
-            <NavLink className="link" to="/home" onClick={handleLogout}>
+            <NavLink className="link" to="/" onClick={handleLogout}>
               Logout
             </NavLink>
           </Menu>
