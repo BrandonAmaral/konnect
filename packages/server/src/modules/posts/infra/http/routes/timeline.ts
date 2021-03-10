@@ -13,14 +13,12 @@ listRouter.get('/timeline', requireAuth, async (request, response) => {
 
   search.push(user?._id);
 
-  user?.following.map((follow) => {
-    search.push(follow);
-  });
+  user?.following.map((follow) => search.push(follow));
 
   const posts = await Post.find({
     owner: { $in: search },
   })
-    .populate('owner')
+    .populate(['owner', 'likes'])
     .sort({ createdAt: 'descending' });
 
   return response.status(200).send(posts);

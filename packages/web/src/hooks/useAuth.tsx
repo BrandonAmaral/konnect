@@ -1,7 +1,5 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import api from '../api/index';
+import axios from 'axios';
 
 interface AuthState {
   token: string;
@@ -25,16 +23,14 @@ interface AuthContextData {
   register(credentials: RegisterCredentials): Promise<void>;
   login(credentials: LoginCredentials): Promise<void>;
   logout(): void;
-  validationError: string | null;
-  clearError(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@nightcrawler:token');
-    const user = localStorage.getItem('@nightcrawler:user');
+    const token = localStorage.getItem('@konnect:token');
+    const user = localStorage.getItem('@konnect:user');
 
     if (token && user) {
       return { token, user: JSON.parse(user) };
@@ -42,65 +38,54 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     return {} as AuthState;
   });
-  const [error, setError] = useState(null);
 
-  const setErrorToNull = useCallback(() => {
-    setError(null);
-  }, []);
-
-  const history = useHistory();
-
-  const register = useCallback(
-    async ({ email, username, tag, password }) => {
-      try {
-        const response = await api.post('/api/users/create', {
+  const register = useCallback(async ({ email, username, tag, password }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_URL}/api/users/create`,
+        {
           email,
           username,
           tag,
           password,
-        });
+        },
+      );
 
-        const { token, user } = response.data;
+      const { token, user } = response.data;
 
-        localStorage.setItem('@nightcrawler:token', token);
-        localStorage.setItem('@nightcrawler:user', JSON.stringify(user));
+      localStorage.setItem('@konnect:token', token);
+      localStorage.setItem('@konnect:user', JSON.stringify(user));
 
-        setData({ token, user });
+      setData({ token, user });
+    } catch (err) {
+      console.log(err.response.data.error);
+    }
+  }, []);
 
-        history.push('/home');
-      } catch (err) {
-        setError(err.response.data.error);
-      }
-    },
-    [history],
-  );
-
-  const login = useCallback(
-    async ({ email, password }) => {
-      try {
-        const response = await api.post('/api/users/auth', {
+  const login = useCallback(async ({ email, password }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_URL}/api/users/auth`,
+        {
           email,
           password,
-        });
+        },
+      );
 
-        const { token, user } = response.data;
+      const { token, user } = response.data;
 
-        localStorage.setItem('@nightcrawler:token', token);
-        localStorage.setItem('@nightcrawler:user', JSON.stringify(user));
+      localStorage.setItem('@konnect:token', token);
+      localStorage.setItem('@konnect:user', JSON.stringify(user));
 
-        setData({ token, user });
-
-        history.push('/home');
-      } catch (err) {
-        setError(err.response.data.error);
-      }
-    },
-    [history],
-  );
+      setData({ token, user });
+    } catch (err) {
+      console.log(err.response.data.error);
+    }
+  }, []);
 
   const logout = useCallback(() => {
-    localStorage.removeItem('@nightcrawler:token');
-    localStorage.removeItem('@nightcrawler:user');
+    localStorage.removeItem('@konnect:token');
+    localStorage.removeItem('@konnect:user');
 
     setData({} as AuthState);
   }, []);
@@ -112,8 +97,6 @@ export const AuthProvider: React.FC = ({ children }) => {
         register,
         login,
         logout,
-        validationError: error,
-        clearError: setErrorToNull,
       }}
     >
       {children}

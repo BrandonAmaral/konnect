@@ -2,10 +2,10 @@ import { Router } from 'express';
 
 import User from '@modules/users/infra/mongoose/schemas/User';
 
-const userInfoRouter = Router();
+const infoRouter = Router();
 
 // Get User Info
-userInfoRouter.get('/info/:tag', async (request, response) => {
+infoRouter.get('/info/:tag', async (request, response) => {
   const user = await User.findOne({ tag: request.params.tag }).populate([
     'following',
     'followers',
@@ -14,4 +14,4 @@ userInfoRouter.get('/info/:tag', async (request, response) => {
   return response.status(200).send(user);
 });
 
-export default userInfoRouter;
+export default infoRouter;

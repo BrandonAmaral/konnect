@@ -1,15 +1,28 @@
-import React, { useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import { Container, Content, Menu } from './styles';
 import { useAuth } from '../../hooks/useAuth';
 
 const Navbar: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
+  const history = useHistory();
+  const [content, setContent] = useState('');
 
   const handleLogout = useCallback(() => {
     logout();
   }, [logout]);
+
+  const handleSearch = useCallback(
+    async (event) => {
+      event.preventDefault();
+
+      if (content) {
+        history.push(`/search/${content}`);
+      }
+    },
+    [content],
+  );
 
   return (
     <Container>
@@ -17,25 +30,24 @@ const Navbar: React.FC = () => {
         <NavLink className="link" to="/home">
           Home
         </NavLink>
-        {!user ? (
-          <Menu>
-            <NavLink className="link" to="/signin">
-              Login
-            </NavLink>
-            <NavLink className="link" to="/signup">
-              Register
-            </NavLink>
-          </Menu>
-        ) : (
-          <Menu>
-            <NavLink className="link" to="/profile">
-              Profile
-            </NavLink>
-            <NavLink className="link" to="/" onClick={handleLogout}>
-              Logout
-            </NavLink>
-          </Menu>
-        )}
+        <Menu>
+          <form onSubmit={handleSearch}>
+            <input
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              name="content"
+              className="bar"
+              type="text"
+              autoComplete="off"
+            />
+          </form>
+          <NavLink className="link" to="/profile">
+            Profile
+          </NavLink>
+          <NavLink className="link" to="/" onClick={handleLogout}>
+            Logout
+          </NavLink>
+        </Menu>
       </Content>
     </Container>
   );

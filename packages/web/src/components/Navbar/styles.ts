@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  position: sticky;
+  top: 0;
+`;
 
 export const Content = styled.div`
-  background: #0d0d0d;
+  background: #2966a3;
   display: flex;
   justify-content: space-between;
 
   .link {
     text-decoration: none;
     color: #fff;
-    transition: color 0.3s;
+    transition: color 0.2s;
     padding: 10px;
 
     &:first-child {
@@ -30,4 +33,11 @@ export const Content = styled.div`
 
 export const Menu = styled.div`
   display: flex;
+  align-items: center;
+
+  .bar {
+    height: 25px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
 `;

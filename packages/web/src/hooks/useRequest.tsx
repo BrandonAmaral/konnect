@@ -11,23 +11,23 @@ interface Request {
 const useRequest = ({ url, method }: Request) => {
   const [errors, setErrors] = useState(null);
 
-  const makeRequest = async (data = {}) => {
+  const makeRequest = async (data = {}, params = '') => {
     try {
       setErrors(null);
       const response = await api({
         method,
-        url,
+        url: `${url + params}`,
         data,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            '@nightcrawler:token',
-          )}`,
+          Authorization: `Bearer ${localStorage.getItem('@konnect:token')}`,
         },
       });
 
       return response.data;
     } catch (err) {
-      setErrors(err.response.data.error);
+      if (err.response) {
+        setErrors(err.response.data.error);
+      }
       return {};
     }
   };

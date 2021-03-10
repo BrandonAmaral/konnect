@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Content, Info } from './styles';
 import { useAuth } from '../../hooks/useAuth';
 import useRequest from '../../hooks/useRequest';
-import Navbar from '../../components/Navbar/index';
+import Navbar from '../../components/Navbar';
 
 interface UserData {
   _id?: string;
@@ -25,16 +25,8 @@ const Profile: React.FC = () => {
   });
 
   useEffect(() => {
-    const getInfo = async () => {
-      const data = await makeRequest();
-      setInfo(data);
-    };
-
-    getInfo();
+    makeRequest().then((data) => setInfo(data));
   }, []);
-
-  const followingCount = info.following?.length;
-  const followersCount = info.followers?.length;
 
   return (
     <Container>
@@ -42,10 +34,18 @@ const Profile: React.FC = () => {
       <Content>
         {info._id && (
           <Info>
-            <div>{`${info.username}`}</div>
-            <div>{`${info.tag}`}</div>
-            <div>{`Following: ${followingCount}`}</div>
-            <div>{`Followers: ${followersCount}`}</div>
+            <img
+              src={`${process.env.REACT_APP_URL}/files/${info.profilePicture}`}
+              alt="pp"
+            />
+            <div className="user-info">
+              <span className="username">{`${info.username}`}</span>
+              <span className="tag">{`@${info.tag}`}</span>
+            </div>
+            <div className="follow">
+              <span>{`Following: ${info.following?.length}`}</span>
+              <span>{`Followers: ${info.followers?.length}`}</span>
+            </div>
           </Info>
         )}
       </Content>

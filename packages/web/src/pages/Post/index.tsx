@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { Container, Content, PostInfo } from './styles';
 import Navbar from '../../components/Navbar/index';
+import Like from '../../components/LikeButton';
+import Dislike from '../../components/DislikeButton';
 import useRequest from '../../hooks/useRequest';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -16,12 +18,13 @@ interface PostData {
     _id: string;
     username: string;
     tag: string;
+    profilePicture: string;
   };
   post?: {
     _id: string;
     slug: string;
     content: string;
-    likes: [];
+    likes: [user_data: { _id: string }];
   };
 }
 
@@ -30,6 +33,7 @@ const Post: React.FC = () => {
   const { user } = useAuth();
 
   const [info, setInfo] = useState<PostData>({});
+  const [change, setChange] = useState(true);
 
   const { makeRequest } = useRequest({
     method: 'get',
@@ -37,29 +41,71 @@ const Post: React.FC = () => {
   });
 
   useEffect(() => {
-    const getInfo = async () => {
-      const data = await makeRequest();
-      setInfo(data);
-    };
-
-    getInfo();
-  }, []);
+    if (change) {
+      makeRequest().then((data) => {
+        setInfo(data);
+        setChange(false);
+      });
+    }
+  }, [makeRequest]);
 
   return (
     <Container>
       <Navbar />
       <Content>
         {info.post && (
-          <PostInfo>
-            <div>{`${info.user?.username}`}</div>
-            <div>{`${info.user?.tag}`}</div>
-            <div>{`${info.post?.content}`}</div>
-            {!(user._id in info.post.likes) ? (
-              <button type="button">Like</button>
-            ) : (
-              <button type="button">Dislike</button>
-            )}
-            <div>{`Likes: ${info.post?.likes.length}`}</div>
+          <PostInfo key={info.post.likes.length}>
+            <Link to={`/${info.user?.tag}`}>
+              <div className="user">
+                <div className="image">
+                  <img
+                    src={`${process.env.REACT_APP_URL}/files/${info.user?.profilePicture}`}
+                    alt="pp"
+                  />
+                </div>
+                <div className="user-info">
+                  <span className="username">{`${info.user?.username}`}</span>
+                  <span className="tag">{`@${info.user?.tag}`}</span>
+                </div>
+              </div>
+            </Link>
+            <div className="content">
+              <span>{`${info.post?.content}`}</span>
+              <span className="likes">{`Likes: ${info.post?.likes.length}`}</span>
+            </div>
+            <div className="like-button-div">
+              {!info.post.likes.length && (
+                <Like
+                  className="button"
+                  key={info.post?._id}
+                  change={() => setChange(true)}
+                  postid={info.post._id}
+                >
+                  Like
+                </Like>
+              )}
+              {info.post.likes.map((data) =>
+                !(user._id === data._id) ? (
+                  <Like
+                    className="button"
+                    key={info.post?._id}
+                    change={() => setChange(true)}
+                    postid={info.post?._id}
+                  >
+                    Like
+                  </Like>
+                ) : (
+                  <Dislike
+                    className="button"
+                    key={info.post?._id}
+                    change={() => setChange(true)}
+                    postid={info.post?._id}
+                  >
+                    Dislike
+                  </Dislike>
+                ),
+              )}
+            </div>
           </PostInfo>
         )}
       </Content>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { shade } from 'polished';
+import { shade, transparentize } from 'polished';
 
 export const Container = styled.div``;
 
@@ -8,13 +8,13 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
   }
 `;
 
 export const PostInput = styled.textarea`
-  background: #242424;
-  color: #fff;
+  background: #ebebeb;
+  color: black;
   height: 150px;
   width: 400px;
   padding: 8px;
@@ -24,7 +24,7 @@ export const PostInput = styled.textarea`
 `;
 
 export const PostButton = styled.button`
-  background: #561869;
+  background: #3384d4;
   color: #fff;
   padding: 8px 10px;
   border-radius: 8px;
@@ -33,6 +33,11 @@ export const PostButton = styled.button`
   margin-top: 10px;
 
   &:hover {
-    background: ${shade(0.2, '#561869')};
+    background: ${shade(0.2, '#3384d4')};
+  }
+
+  &:disabled {
+    background: ${transparentize(0.4, '#3384d4')};
+    cursor: default;
   }
 `;

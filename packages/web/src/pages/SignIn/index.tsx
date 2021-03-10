@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -12,11 +12,7 @@ interface LoginFormData {
 }
 
 const SignIn: React.FC = () => {
-  const { login, validationError, clearError } = useAuth();
-
-  useEffect(() => {
-    clearError();
-  }, [clearError]);
+  const { login } = useAuth();
 
   const handleSubmit = useCallback(
     async (data: LoginFormData) => {
@@ -29,7 +25,7 @@ const SignIn: React.FC = () => {
   );
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
 
@@ -57,7 +53,6 @@ const SignIn: React.FC = () => {
             <Link to="/signup">Register</Link>
 
             <button type="submit">Enter</button>
-            <div>{validationError}</div>
           </Form>
         </Formik>
       </Content>

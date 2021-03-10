@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { Container, Content, PostInput, PostButton } from './styles';
 import useRequest from '../../hooks/useRequest';
 
 const CreatePost: React.FC = () => {
   const [content, setContent] = useState('');
-  const history = useHistory();
 
   const { makeRequest } = useRequest({
     url: '/api/posts/create',
@@ -18,7 +16,6 @@ const CreatePost: React.FC = () => {
       event.preventDefault();
 
       await makeRequest({ content });
-      history.go(0);
     },
     [content, makeRequest],
   );
@@ -33,7 +30,11 @@ const CreatePost: React.FC = () => {
             name="content"
             placeholder="What's happening?"
           />
-          <PostButton>Send</PostButton>
+          {content ? (
+            <PostButton>Send</PostButton>
+          ) : (
+            <PostButton disabled>Send</PostButton>
+          )}
         </form>
       </Content>
     </Container>
