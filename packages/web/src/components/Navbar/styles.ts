@@ -39,5 +39,6 @@ export const Menu = styled.div`
     height: 25px;
     border-radius: 5px;
     margin-right: 10px;
+    padding-left: 4px;
   }
 `;

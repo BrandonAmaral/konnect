@@ -11,13 +11,12 @@ export const Content = styled.div`
 export const PostInfo = styled.div`
   color: black;
   width: 500px;
-  margin-top: 15px;
+  margin: 15px 0;
   padding: 20px;
 
   border: 1px solid #e0e0e0;
   background: #ebebeb;
   border-radius: 10px;
-  box-shadow: 0px 0px 8px 0px #363636;
 
   .user {
     display: flex;
@@ -40,15 +39,21 @@ export const PostInfo = styled.div`
     }
   }
 
-  .content {
-    margin: 15px 0;
+  .post {
+    border: 1px solid #bfbfbf;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
+    margin: 15px 10px 20px 10px;
+    text-decoration: none;
+    color: black;
 
-    .likes {
-      margin-top: 15px;
-      font-size: 14px;
-      font-weight: bold;
+    .content {
+      margin: 10px 10px 10px 10px;
+
+      &:last-child {
+        font-weight: bold;
+      }
     }
   }
 

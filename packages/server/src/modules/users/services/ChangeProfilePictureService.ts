@@ -16,7 +16,7 @@ class ChangeProfilePictureService {
   }: Request): Promise<UserDocument | null> {
     const user = await User.findById(user_id);
 
-    if (user?.profilePicture !== 'default.png') {
+    if (user?.profilePicture !== 'default.png' || '') {
       const userPicturePath = path.join(
         uploadConfig.directory,
         user?.profilePicture!,

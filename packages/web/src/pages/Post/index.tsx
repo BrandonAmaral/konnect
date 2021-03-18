@@ -69,9 +69,9 @@ const Post: React.FC = () => {
                 </div>
               </div>
             </Link>
-            <div className="content">
-              <span>{`${info.post?.content}`}</span>
-              <span className="likes">{`Likes: ${info.post?.likes.length}`}</span>
+            <div className="post">
+              <span className="content">{`${info.post?.content}`}</span>
+              <span className="content">{`Likes: ${info.post?.likes.length}`}</span>
             </div>
             <div className="like-button-div">
               {!info.post.likes.length && (

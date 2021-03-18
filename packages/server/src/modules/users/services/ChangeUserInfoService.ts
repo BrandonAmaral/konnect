@@ -12,16 +12,6 @@ class ChangeUserInfoService {
     username,
     tag,
   }: Request): Promise<UserDocument | null> {
-    const user = await User.findById(user_id);
-
-    if (username === '') {
-      username = user?.username!;
-    }
-
-    if (tag === '') {
-      tag = user?.tag!;
-    }
-
     const change = await User.findByIdAndUpdate(
       user_id,
       {

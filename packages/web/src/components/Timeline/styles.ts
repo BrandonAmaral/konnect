@@ -5,6 +5,10 @@ export const Container = styled.div``;
 export const Content = styled.div`
   width: 500px;
   margin-top: 30px;
+
+  .no-post {
+    text-align: center;
+  }
 `;
 
 export const Post = styled.div`
@@ -14,7 +18,6 @@ export const Post = styled.div`
   border: 1px solid #e0e0e0;
   background: #ebebeb;
   border-radius: 10px;
-  box-shadow: 0px 0px 6px 0px #363636;
   padding: 10px;
 
   .user {
@@ -51,7 +54,7 @@ export const Post = styled.div`
     color: black;
 
     .content {
-      margin: 10px 0 10px 10px;
+      margin: 10px 10px 10px 10px;
 
       &:last-child {
         font-weight: bold;
@@ -70,11 +73,14 @@ export const Post = styled.div`
     }
   }
 
+  background-size: contain;
+
   img {
     border-radius: 50%;
     border: 2px solid #666666;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
+    object-fit: fill;
   }
 
   &:first-child {

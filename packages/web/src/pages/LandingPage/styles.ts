@@ -45,6 +45,7 @@ export const Header = styled.header`
     top: 38%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
 
     @keyframes moveRight {
       0% {
@@ -72,6 +73,7 @@ export const Technologies = styled.div`
   .title {
     color: #2966a3;
     margin: 0 10px;
+    text-align: center;
   }
 
   .mern {

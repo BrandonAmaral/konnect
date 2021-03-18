@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { Link } from 'react-router-dom';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 import { Container, Content } from './styles';
 import { useAuth } from '../../hooks/useAuth';
+import { setError } from '../../store/actions/accountActions';
 
 interface RegisterFormData {
   email: string;
@@ -15,6 +17,14 @@ interface RegisterFormData {
 
 const SignUp: React.FC = () => {
   const { register } = useAuth();
+  const error = useSelector(
+    (state: RootStateOrAny) => state.account.errorMessage,
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setError(''));
+  }, []);
 
   const handleSubmit = useCallback(
     async (data: RegisterFormData) => {
@@ -62,27 +72,72 @@ const SignUp: React.FC = () => {
           validateOnMount={false}
           validateOnChange={false}
         >
-          <Form>
-            <Field name="email" autoComplete="off" />
-            <ErrorMessage name="email" />
+          <Form className="form">
+            <h1 className="title">Create Account</h1>
 
-            <Field name="username" autoComplete="off" />
-            <ErrorMessage name="username" />
+            <Field
+              className="field"
+              name="email"
+              autoComplete="off"
+              placeholder="Email"
+            />
+            <ErrorMessage name="email">
+              {(msg) => <div className="error">{msg}</div>}
+            </ErrorMessage>
 
-            <Field name="tag" autoComplete="off" />
-            <ErrorMessage name="tag" />
+            <Field
+              className="field"
+              name="username"
+              autoComplete="off"
+              placeholder="Username"
+            />
+            <ErrorMessage name="username">
+              {(msg) => <div className="error">{msg}</div>}
+            </ErrorMessage>
 
-            <Field name="password" type="password" />
-            <ErrorMessage name="password" />
+            <Field
+              className="field"
+              name="tag"
+              autoComplete="off"
+              placeholder="Tag"
+            />
+            <ErrorMessage name="tag">
+              {(msg) => <div className="error">{msg}</div>}
+            </ErrorMessage>
 
-            <Field name="confirm_password" type="password" />
-            <ErrorMessage name="password_confirm" />
+            <Field
+              className="field"
+              name="password"
+              type="password"
+              placeholder="Password"
+            />
+            <ErrorMessage name="password">
+              {(msg) => <div className="error">{msg}</div>}
+            </ErrorMessage>
 
-            <Link to="/signin">Already have an account?</Link>
+            <Field
+              className="field"
+              name="confirm_password"
+              type="password"
+              placeholder="Confirm Password"
+            />
+            <ErrorMessage name="password_confirm">
+              {(msg) => <div className="error">{msg}</div>}
+            </ErrorMessage>
 
-            <button type="submit">Register</button>
+            <div className="signin-div">
+              Already have an account?
+              <Link className="link" to="/signin">
+                Sign-In
+              </Link>
+            </div>
+
+            <button className="button" type="submit">
+              Register
+            </button>
           </Form>
         </Formik>
+        <div>{error}</div>
       </Content>
     </Container>
   );

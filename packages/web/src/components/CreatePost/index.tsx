@@ -1,10 +1,13 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Container, Content, PostInput, PostButton } from './styles';
 import useRequest from '../../hooks/useRequest';
+import { fetch } from '../../store/actions/timelineActions';
 
 const CreatePost: React.FC = () => {
   const [content, setContent] = useState('');
+  const dispatch = useDispatch();
 
   const { makeRequest } = useRequest({
     url: '/api/posts/create',
@@ -16,6 +19,7 @@ const CreatePost: React.FC = () => {
       event.preventDefault();
 
       await makeRequest({ content });
+      dispatch(fetch());
     },
     [content, makeRequest],
   );

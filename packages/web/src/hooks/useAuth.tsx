@@ -1,5 +1,7 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setError } from '../store/actions/accountActions';
 
 interface AuthState {
   token: string;
@@ -38,6 +40,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     return {} as AuthState;
   });
+  const dispatch = useDispatch();
 
   const register = useCallback(async ({ email, username, tag, password }) => {
     try {
@@ -58,7 +61,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       setData({ token, user });
     } catch (err) {
-      console.log(err.response.data.error);
+      dispatch(setError(err.response.data.error));
     }
   }, []);
 
@@ -79,7 +82,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       setData({ token, user });
     } catch (err) {
-      console.log(err.response.data.error);
+      dispatch(setError(err.response.data.error));
     }
   }, []);
 

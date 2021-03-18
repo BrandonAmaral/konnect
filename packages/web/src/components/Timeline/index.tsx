@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 
 import { Container, Content, Post } from './styles';
-import useRequest from '../../hooks/useRequest';
 import { useAuth } from '../../hooks/useAuth';
 import Like from '../LikeButton';
 import Dislike from '../DislikeButton';
+import { fetch } from '../../store/actions/timelineActions';
 
 interface PostData {
   _id: string;
@@ -25,32 +26,31 @@ type TimelineData = PostData[];
 const Timeline: React.FC = () => {
   const { user } = useAuth();
 
-  const [content, setContent] = useState<TimelineData>([]);
-  const [change, setChange] = useState(true);
-
-  const { makeRequest } = useRequest({
-    url: '/api/posts/timeline',
-    method: 'get',
-  });
+  const content: TimelineData = useSelector(
+    (state: RootStateOrAny) => state.timeline.timeline,
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (change) {
-      makeRequest().then((response) => {
-        setContent(response);
-        setChange(false);
-      });
-    }
-  }, [makeRequest]);
+    dispatch(fetch());
+  }, []);
 
   return (
     <Container>
       <Content>
+        {!content && (
+          <h1 className="no-post">
+            You have no posts on your timeline. Create a new post or follow
+            someone.
+          </h1>
+        )}
         {content[0] &&
           content.map((post) => (
             <Post key={post._id}>
               <div className="user">
                 <Link to={`/${post.owner?.tag}`}>
                   <img
+                    key={post.owner?.profilePicture}
                     src={`${process.env.REACT_APP_URL}/files/${post.owner?.profilePicture}`}
                     alt="pp"
                   />
@@ -68,8 +68,8 @@ const Timeline: React.FC = () => {
                 {!post.likes.length && (
                   <Like
                     className="button"
-                    key={post._id}
-                    change={() => setChange(true)}
+                    key={post.likes.length}
+                    change={() => dispatch(fetch())}
                     postid={post._id}
                   >
                     Like
@@ -79,8 +79,8 @@ const Timeline: React.FC = () => {
                   !(user._id === data._id) ? (
                     <Like
                       className="button"
-                      key={post._id}
-                      change={() => setChange(true)}
+                      key={post.likes.length}
+                      change={() => dispatch(fetch())}
                       postid={post?._id}
                     >
                       Like
@@ -88,8 +88,8 @@ const Timeline: React.FC = () => {
                   ) : (
                     <Dislike
                       className="button"
-                      key={post._id}
-                      change={() => setChange(true)}
+                      key={post.likes.length}
+                      change={() => dispatch(fetch())}
                       postid={post?._id}
                     >
                       Dislike

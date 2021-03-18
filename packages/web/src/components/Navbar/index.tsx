@@ -11,6 +11,7 @@ const Navbar: React.FC = () => {
 
   const handleLogout = useCallback(() => {
     logout();
+    window.scrollTo(0, 0);
   }, [logout]);
 
   const handleSearch = useCallback(
@@ -39,6 +40,7 @@ const Navbar: React.FC = () => {
               className="bar"
               type="text"
               autoComplete="off"
+              placeholder="Search"
             />
           </form>
           <NavLink className="link" to="/profile">

@@ -27,6 +27,7 @@ export const Info = styled.div`
     border: 2px solid #666666;
     width: 300px;
     height: 300px;
+    object-fit: fill;
   }
 
   .follow-button-div {

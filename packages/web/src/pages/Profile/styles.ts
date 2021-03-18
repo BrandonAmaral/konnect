@@ -6,7 +6,7 @@ export const Content = styled.div`
   display: flex;
   justify-content: center;
 
-  margin-top: 30px;
+  margin: 30px 0;
 
   color: black;
 `;
@@ -16,18 +16,36 @@ export const Info = styled.div`
   border: 1px solid #e0e0e0;
   background: #ebebeb;
   border-radius: 10px;
-  box-shadow: 0px 0px 8px 0px #363636;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 500px;
 
+  .edit {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .link {
+      display: flex;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      background: #598dc9;
+      object-fit: fill;
+    }
+  }
+
   img {
     border-radius: 50%;
     border: 2px solid #666666;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
+    object-fit: fill;
   }
 
   .follow {

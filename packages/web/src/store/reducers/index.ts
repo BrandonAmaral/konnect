@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
-import timelineRefreshReducer from './timelineRefresh';
+import timelineReducer from './timelineReducer';
+import accountReducer from './accountReducer';
 
 const all = combineReducers({
-  timelineRefresh: timelineRefreshReducer,
+  timeline: timelineReducer,
+  account: accountReducer,
 });
 
 export default all;

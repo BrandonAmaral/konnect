@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { Link } from 'react-router-dom';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 import { Container, Content } from './styles';
 import { useAuth } from '../../hooks/useAuth';
+import { setError } from '../../store/actions/accountActions';
 
 interface LoginFormData {
   email: string;
@@ -13,6 +15,14 @@ interface LoginFormData {
 
 const SignIn: React.FC = () => {
   const { login } = useAuth();
+  const error = useSelector(
+    (state: RootStateOrAny) => state.account.errorMessage,
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setError(''));
+  }, []);
 
   const handleSubmit = useCallback(
     async (data: LoginFormData) => {
@@ -43,16 +53,41 @@ const SignIn: React.FC = () => {
           validateOnMount={false}
           validateOnChange={false}
         >
-          <Form>
-            <Field name="email" autoComplete="off" />
-            <ErrorMessage name="email" />
+          <Form className="form">
+            <h1 className="title">Welcome!</h1>
 
-            <Field name="password" type="password" />
-            <ErrorMessage name="password" />
+            <Field
+              className="field"
+              name="email"
+              autoComplete="off"
+              placeholder="Email"
+            />
+            <ErrorMessage name="email">
+              {(msg) => <div className="error">{msg}</div>}
+            </ErrorMessage>
 
-            <Link to="/signup">Register</Link>
+            <Field
+              className="field"
+              name="password"
+              type="password"
+              placeholder="Password"
+            />
+            <ErrorMessage name="password">
+              {(msg) => <div className="error">{msg}</div>}
+            </ErrorMessage>
 
-            <button type="submit">Enter</button>
+            {error && <div className="server-error">{error}</div>}
+
+            <div className="signup-div">
+              New to Konnect?
+              <Link className="link" to="/signup">
+                Register
+              </Link>
+            </div>
+
+            <button className="button" type="submit">
+              Enter
+            </button>
           </Form>
         </Formik>
       </Content>
